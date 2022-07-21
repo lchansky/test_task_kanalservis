@@ -1,0 +1,22 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: postgres
+    container_name: db
+    restart: always
+    ports:
+      - 54321:5432
+    environment:
+      POSTGRES_PASSWORD: simplepassword
+      POSTGRES_USER: default_user
+      POSTGRES_DB: db_01
+      PGDATA: /home/ubuntu/postgres/data
+      POSTGRES_INITDB_ARGS: "-A md5"
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
