@@ -9,7 +9,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
-from google_api.config import SPREADSHEET_ID, RANGE, TOKEN, CLIENT_SECRET
+from main_app.google_api.config import SPREADSHEET_ID, RANGE, TOKEN, CLIENT_SECRET
 
 
 # If modifying these scopes, delete the file token.json.
