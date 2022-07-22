@@ -1,4 +1,5 @@
 from django.db import models, transaction, IntegrityError
+from django.db.models import Sum
 
 from main_app.google_api.config import RANGE
 from main_app.google_api.from_sheets import execute_data
@@ -8,11 +9,10 @@ COLUMNS = ('pk', 'number', 'price_usd', 'delivery_time', 'price_rub')
 
 
 class Order(models.Model):
-    number = models.IntegerField(blank=True, null=True)
-    price_usd = models.FloatField(blank=True, null=True)
-    delivery_date = models.DateField(blank=True, null=True)
-    price_rub = models.FloatField(blank=True, null=True)
-    error_message = models.CharField(max_length=200, null=True, blank=True)
+    number = models.IntegerField(blank=True, null=True, verbose_name='Заказ №')
+    price_usd = models.FloatField(blank=True, null=True, verbose_name='Стоимость, $')
+    delivery_date = models.DateField(blank=True, null=True, verbose_name='Срок поставки')
+    price_rub = models.FloatField(blank=True, null=True, verbose_name='Стоимость, Р')
 
     @staticmethod
     @transaction.atomic
@@ -47,3 +47,21 @@ class Order(models.Model):
             print('Ошибка! Изменения не сохранены! Проверьте токены, настройки доступа таблицы, правильная ли ссылка, '
                   'правильность указанных данных в таблице, и что все строки заполнены корректно'
                   )
+
+    @staticmethod
+    def get_sum_per_days():
+        orders = Order.objects.values_list('delivery_date')
+        orders = orders.annotate(total_price=Sum('price_usd'))
+        orders = orders.order_by('delivery_date')
+
+        dates, sums = zip(*list(orders))
+        dates = str(list(
+            dt.strftime("%d.%m.%Y") for dt in dates
+        ))
+        sums = str(list(sums))
+        return dates, sums
+
+    @classmethod
+    def total_usd(cls):
+        """Возвращает сумму USD всех заказов"""
+        return cls.objects.aggregate(Sum('price_usd')).get('price_usd__sum')
