@@ -1,3 +1,5 @@
+from time import sleep
+
 from django.core.management.base import BaseCommand
 
 from main_app.models import Order, User
@@ -9,4 +11,6 @@ class Command(BaseCommand):
            'Отправляет уведомление в телеграм, если произошла ошибка'
 
     def handle(self, *args, **options):
-        Order.refresh_table_infinity()
+        while True:
+            Order.refresh_table()
+            sleep(10)

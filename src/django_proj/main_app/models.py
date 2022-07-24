@@ -21,13 +21,6 @@ class Order(models.Model):
     def __str__(self):
         return f'Заказ № {self.number} -- Срок поставки: {self.delivery_date} -- {self.price_usd} $'
 
-    @classmethod
-    def refresh_table_infinity(cls):
-        while True:
-            cls.refresh_table()
-            sleep(10)
-
-
     @staticmethod
     @transaction.atomic
     def refresh_table():

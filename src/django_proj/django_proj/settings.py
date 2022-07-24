@@ -79,18 +79,18 @@ WSGI_APPLICATION = 'django_proj.wsgi.application'
 
 DATABASES = {
     'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': os.environ.get('POSTGRES_DB', default='kanalservis'),
-            'USER': os.environ.get('POSTGRES_USER', default='postgres'),
-            'PASSWORD': os.environ.get('POSTGRES_PASSWORD', default=''),
-            'HOST': os.environ.get('POSTGRES_HOST', default='db'),
-            'PORT': "5432"
             # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
             # 'NAME': os.environ.get('POSTGRES_DB', default='kanalservis'),
-            # 'USER': os.environ.get('POSTGRES_USER', default='kanal_user'),
-            # 'PASSWORD': os.environ.get('POSTGRES_PASSWORD', default='strongpassword_vhf494'),
-            # 'HOST': os.environ.get('POSTGRES_HOST', default='localhost'),
+            # 'USER': os.environ.get('POSTGRES_USER', default='postgres'),
+            # 'PASSWORD': os.environ.get('POSTGRES_PASSWORD', default=''),
+            # 'HOST': os.environ.get('POSTGRES_HOST', default='db'),
             # 'PORT': "5432"
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.environ.get('POSTGRES_DB', default='kanalservis'),
+            'USER': os.environ.get('POSTGRES_USER', default='kanal_user'),
+            'PASSWORD': os.environ.get('POSTGRES_PASSWORD', default='strongpassword_vhf494'),
+            'HOST': os.environ.get('POSTGRES_HOST', default='localhost'),
+            'PORT': "5432"
         }
 }
 
