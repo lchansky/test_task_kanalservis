@@ -1,22 +1,47 @@
-version: '3.1'
+version: '3.8'
 
 services:
 
   db:
     image: postgres
-    container_name: db
     restart: always
-    ports:
-      - 54321:5432
+    build:
+      context: .
+      dockerfile: ./Dockerfile_db
     environment:
-      POSTGRES_PASSWORD: simplepassword
-      POSTGRES_USER: default_user
-      POSTGRES_DB: db_01
-      PGDATA: /home/ubuntu/postgres/data
-      POSTGRES_INITDB_ARGS: "-A md5"
-
-  adminer:
-    image: adminer
-    restart: always
+#      POSTGRES_DB: kanalservis
+#      POSTGRES_USER: kanal_user
+#      POSTGRES_PASSWORD: strongpassword_vhf494
+       POSTGRES_HOST_AUTH_METHOD: trust
+    container_name: db
     ports:
-      - 8080:8080
+      - "54321:5432"
+
+  django_proj:
+    container_name: kanalservis
+    restart: always
+    build: .
+#    command: python3 manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    depends_on:
+       - db
+#  bot:
+#    restart: always
+#    build: .
+
+#    links:
+#       - db:db
+#    networks:
+#       - network1
+#networks:
+#  network1:
+#    driver: bridge
+
+#  adminer:
+#    image: adminer
+#    restart: always
+#    ports:
+#      - "8080:8080"
+
+

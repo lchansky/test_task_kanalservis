@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-zwrufrtn5#8z((u8vpt4m0ux1(r#-=m2p2)gs*95yp-yk(3m4b
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -79,12 +79,18 @@ WSGI_APPLICATION = 'django_proj.wsgi.application'
 
 DATABASES = {
     'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'kanalservis',
-            'USER': 'kanal_user',
-            'PASSWORD': 'strongpassword_vhf494',
-            'HOST': 'localhost',
-            'PORT': '5432',
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.environ.get('POSTGRES_DB', default='kanalservis'),
+            'USER': os.environ.get('POSTGRES_USER', default='postgres'),
+            'PASSWORD': os.environ.get('POSTGRES_PASSWORD', default=''),
+            'HOST': os.environ.get('POSTGRES_HOST', default='db'),
+            'PORT': "5432"
+            # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            # 'NAME': os.environ.get('POSTGRES_DB', default='kanalservis'),
+            # 'USER': os.environ.get('POSTGRES_USER', default='kanal_user'),
+            # 'PASSWORD': os.environ.get('POSTGRES_PASSWORD', default='strongpassword_vhf494'),
+            # 'HOST': os.environ.get('POSTGRES_HOST', default='localhost'),
+            # 'PORT': "5432"
         }
 }
 

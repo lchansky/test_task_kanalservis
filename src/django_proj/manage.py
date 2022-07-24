@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """Django's command-line utility for administrative tasks."""
 import os
+import secrets
 import sys
 
 
@@ -18,5 +19,12 @@ def main():
     execute_from_command_line(sys.argv)
 
 
+def gen_token():
+    with open('main_app/telegram_bot/token.txt', 'w') as file:
+        file.write(str(secrets.token_bytes()))
+
+
 if __name__ == '__main__':
+    gen_token()
     main()
+
